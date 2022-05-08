@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="fragment/base" >
+
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div class="row" layout:fragment="content">
+    <div class="col-sm-12"><h1 class="text-center" th:text="${title}"></h1></div>
+    <div class="col-sm-12">
+        <div class="col-sm-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.id}"/>
+                    <td th:if="${student.image != null && student.image.startsWith('https') == true}">
+                        <img style="width: 50px; height: 50px" class="rounded-circle"
+                             th:src="@{'' + ${student.image}}"
+                             th:alt="${student.name}" />
+                    </td>
+                    <td th:if="${student.image == null || student.image.startsWith('https') != true}">
+                        <img style="width: 50px; height: 50px" class="rounded-circle"
+                             src="https://res.cloudinary.com/lap-trinh-java/image/upload/v1649398048/sekph45ob716ed2w6bds.jpg"
+                             th:alt="${student.name}" />
+                    </td>
+                    <td th:text="${student.name}"/>
+                    <td th:text="${student.email}"/>
+                    <td th:text="${student.dob}"/>
+                    <td><a class="btn btn-danger" th:href="@{'/student/' + ${student.id} }" role="button">Update</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/script.js}"></script>
+</th:block>
+</html>
